@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Science For AI Conference</title>
+    <script src="https://unpkg.com/react@17.0.2/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@17.0.2/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6.26.0/babel.min.js"></script>
+    <style>
+      body {
+        font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS",
+          sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #000;
+        color: #fff;
+        line-height: 1.6;
+      }
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+      }
+      h1 {
+        text-align: center;
+        color: #0ff;
+        text-shadow: 0 0 10px #0ff;
+      }
+      h2 {
+        color: #f0f;
+        text-shadow: 0 0 5px #f0f;
+      }
+      .tracks {
+        display: flex;
+        justify-content: space-around;
+        flex-wrap: wrap;
+      }
+      .track {
+        background-color: #111;
+        border: 2px solid #0f0;
+        border-radius: 10px;
+        padding: 20px;
+        margin: 10px;
+        width: 200px;
+        text-align: center;
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+      .track:hover {
+        transform: scale(1.05);
+        box-shadow: 0 0 15px #0f0;
+      }
+      .modal {
+        display: none;
+        position: fixed;
+        z-index: 1;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.7);
+      }
+      .modal-content {
+        background-color: #111;
+        margin: 15% auto;
+        padding: 20px;
+        border: 2px solid #0ff;
+        border-radius: 10px;
+        width: 70%;
+        max-width: 600px;
+      }
+      .close {
+        color: #f00;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+        cursor: pointer;
+      }
+      .keynote,
+      .info,
+      .impact,
+      .benefits {
+        background-color: #111;
+        border: 2px solid #ff0;
+        border-radius: 10px;
+        padding: 20px;
+        margin: 20px 0;
+      }
+      button {
+        background-color: #f0f;
+        color: #fff;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+      button:hover {
+        background-color: #0ff;
+      }
+      ul {
+        padding-left: 20px;
+      }
+      li {
+        margin-bottom: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+      const tracks = [
+        {
+          id: 1,
+          name: "AI Ethics",
+          description:
+            "Explore the ethical implications of AI in research and society.",
+        },
+        {
+          id: 2,
+          name: "Machine Learning",
+          description:
+            "Dive into cutting-edge machine learning techniques and applications.",
+        },
+        {
+          id: 3,
+          name: "AI in Healthcare",
+          description:
+            "Discover how AI is revolutionizing healthcare and medical research.",
+        },
+        {
+          id: 4,
+          name: "Natural Language Processing",
+          description:
+            "Learn about the latest advancements in NLP and language models.",
+        },
+      ];
+
+      function Modal({ track, onClose }) {
+        return (
+          <div className="modal" style={{ display: "block" }}>
+            <div className="modal-content">
+              <span className="close" onClick={onClose}>
+                &times;
+              </span>
+              <h2>{track.name}</h2>
+              <p>{track.description}</p>
+              <p>
+                Workshops and presentations related to {track.name} will be held
+                throughout the day.
+              </p>
+            </div>
+          </div>
+        );
+      }
+
+      function App() {
+        const [selectedTrack, setSelectedTrack] = React.useState(null);
+
+        const openModal = (track) => {
+          setSelectedTrack(track);
+        };
+
+        const closeModal = () => {
+          setSelectedTrack(null);
+        };
+
+        return (
+          <div className="container">
+            <h1>Science For AI Conference</h1>
+            <p style={{ textAlign: "center" }}>July 31st, 2024 at UCSF</p>
+
+            <div className="keynote">
+              <h2>Keynote Speaker</h2>
+              <p>
+                Dr. Rajathri Sringamuran: "The Future of AI in Scientific
+                Research"
+              </p>
+              <p>Time: 9:00 AM - 10:30 AM</p>
+            </div>
+
+            <h2>Workshop Tracks</h2>
+            <div className="tracks">
+              {tracks.map((track) => (
+                <div
+                  key={track.id}
+                  className="track"
+                  onClick={() => openModal(track)}
+                >
+                  <h3>{track.name}</h3>
+                  <button>View Details</button>
+                </div>
+              ))}
+            </div>
+
+            {selectedTrack && (
+              <Modal track={selectedTrack} onClose={closeModal} />
+            )}
+
+            <div className="impact">
+              <h2>The Impact of AI on Science</h2>
+              <p>
+                Artificial Intelligence is revolutionizing the scientific
+                landscape, ushering in a new era of discovery and innovation. By
+                leveraging machine learning algorithms and vast computational
+                power, AI is enabling researchers to analyze complex datasets,
+                identify patterns, and generate hypotheses at unprecedented
+                speeds. This symbiosis between human ingenuity and machine
+                capabilities is accelerating the pace of scientific
+                breakthroughs across disciplines, from genomics to astrophysics.
+              </p>
+              <p>
+                In the realm of experimental design and data collection, AI is
+                proving to be an invaluable tool. Adaptive AI systems can
+                optimize experimental parameters in real-time, maximizing the
+                efficiency of resource-intensive scientific processes. Moreover,
+                AI-driven robotic systems are automating laboratory tasks,
+                reducing human error, and allowing for 24/7 experimentation.
+                This not only increases productivity but also enables the
+                exploration of experimental spaces that were previously
+                infeasible due to time or resource constraints.
+              </p>
+              <p>
+                Perhaps most excitingly, AI is opening up entirely new avenues
+                of scientific inquiry. By identifying subtle correlations in
+                multidimensional datasets, AI systems are suggesting novel
+                hypotheses that human researchers might have overlooked.
+                Furthermore, AI's ability to model complex systems is providing
+                new insights into phenomena ranging from climate dynamics to
+                protein folding. As we continue to refine these AI tools and
+                integrate them more deeply into the scientific process, we stand
+                on the brink of a new scientific revolution, one in which the
+                boundaries of human knowledge are expanded not just by human
+                minds, but by the powerful synergy between human and artificial
+                intelligence.
+              </p>
+            </div>
+
+            <div className="benefits">
+              <h2>Benefits from Attending</h2>
+              <ul>
+                <li>
+                  Gain cutting-edge insights into the latest AI applications in
+                  scientific research
+                </li>
+                <li>
+                  Network with leading AI researchers, data scientists, and
+                  industry professionals
+                </li>
+                <li>
+                  Participate in hands-on workshops to enhance your AI and
+                  machine learning skills
+                </li>
+                <li>
+                  Explore potential collaborations and career opportunities in
+                  AI-driven scientific fields
+                </li>
+                <li>
+                  Learn about ethical considerations and best practices in AI
+                  implementation for research
+                </li>
+                <li>
+                  Receive a certificate of attendance, recognizing your
+                  commitment to advancing AI in science
+                </li>
+              </ul>
+            </div>
+
+            <div className="info">
+              <h2>Conference Information</h2>
+              <p>Date: July 31st, 2024</p>
+              <p>Venue: UCSF Campus, San Francisco</p>
+              <p>Food: Vegan options available</p>
+              <p>Schedule: 8:00 AM - 6:00 PM</p>
+            </div>
+          </div>
+        );
+      }
+
+      ReactDOM.render(<App />, document.getElementById("root"));
+    </script>
+  </body>
+</html>
